@@ -5,6 +5,8 @@ import time
 import os
 import argparse
 import logging
+import datetime
+from calendar import timegm
 
 # Default logging to stderr
 logging.basicConfig(level=logging.DEBUG, stream=sys.stderr,
@@ -47,15 +49,20 @@ def main():
     args = parseargs()
 
     while 1:
-        for the_file in os.listdir(args.path):
-            file_path = os.path.join(args.path, the_file)
-            try:
-                if os.path.isfile(file_path):
-                    os.unlink(file_path)
-            except Exception as e:
-                print e.message
-        time.sleep(args.delay)
-
+        if timegm(datetime.datetime.now()) >= args.start:
+            while 1:
+                for the_file in os.listdir(args.path):
+                    file_path = os.path.join(args.path, the_file)
+                    try:
+                        if os.path.isfile(file_path):
+                            os.unlink(file_path)
+                    except Exception as e:
+                        print e.message
+                time.sleep(args.delay)
+            break
+        else:
+            time.sleep(args.delay)
+            
 
 def cli():
     exit(main())
