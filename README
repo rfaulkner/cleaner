@@ -1,0 +1,8 @@
+cleaner
+=======
+
+Periodically cleans all files out of a path.  To call:
+
+    $ ./clean -p <path-name> -d <delay-in-seconds> -s <unix-start-time>
+
+This will clear all files in the path and at the frequency specified beginning at the unix timestamp specified.
