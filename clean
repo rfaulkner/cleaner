@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+
+import sys
+import time
+import os
+import argparse
+import logging
+
+# Default logging to stderr
+logging.basicConfig(level=logging.DEBUG, stream=sys.stderr,
+                    format='%(asctime)s %(levelname)-8s %(message)s',
+                    datefmt='%b-%d %H:%M:%S')
+
+
+def parseargs():
+    """Parse command line arguments.
+
+    Returns *args*, the list of arguments left over after processing.
+
+    """
+    parser = argparse.ArgumentParser(
+        description="Command to iteratively clean out a path.",
+        epilog="",
+        conflict_handler="resolve",
+        usage="clean [-p path] [-d delay] [-s start]"
+    )
+
+    parser.allow_interspersed_args = False
+
+    # Global options.
+    parser.add_argument("-p", "--path",
+                        default='', type=str,
+                        help="The path to clean.")
+    parser.add_argument("-d", "--delay",
+                        default=86400, action=int,
+                        help="The frequency the path is cleaned.")
+    parser.add_argument("-s", "--start",
+                        default=-1, type=int,
+                        help="Start time for cleaner.")
+
+    args = parser.parse_args()
+    return args
+
+
+def main():
+
+    args = parseargs()
+
+    while 1:
+        for the_file in os.listdir(args.path):
+            file_path = os.path.join(args.path, the_file)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+            except Exception as e:
+                print e.message
+        time.sleep(args.delay)
+
+
+def cli():
+    exit(main())
+
+if __name__ == '__main__':
+    cli()
+
