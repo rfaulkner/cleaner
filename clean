@@ -62,7 +62,7 @@ def main():
             break
         else:
             time.sleep(args.delay)
-            
+
 
 def cli():
     exit(main())
