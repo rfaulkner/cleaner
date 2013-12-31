@@ -55,6 +55,9 @@ def main():
                     file_path = os.path.join(args.path, the_file)
                     try:
                         if os.path.isfile(file_path):
+                            logging.info('clean: clearing "{0}" @ {1}'.format(
+                                args.path, str(datetime.datetime.now())
+                            ))
                             os.unlink(file_path)
                     except Exception as e:
                         print e.message
