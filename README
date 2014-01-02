@@ -11,8 +11,7 @@ To use:
 
     $ nohup clean -p <path-name> -d <delay-in-seconds> -s <unix-start-time> > clean.out 2> clean.err < /dev/null &
 
-This will clear all files in the path and at the frequency specified beginning at the unix timestamp specified.  To stop
-it kill the process:
+This will clear all files in the path and at the frequency specified beginning at the unix timestamp specified.  To stop it kill the process:
 
     $ ps aux | grep clean
     root            11242   0.0  0.0  2850488   3920   ??  Ss   23Dec13   6:11.86 /usr/bin/clean
